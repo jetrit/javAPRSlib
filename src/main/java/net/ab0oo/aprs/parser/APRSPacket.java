@@ -24,6 +24,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.stream.Collectors;
+
 /**
  * 
  * @author johng
@@ -32,7 +34,7 @@ import java.util.Date;
  */
 public class APRSPacket implements Serializable {
     private static final long serialVersionUID = 1L;
-	private Date receivedTimestamp = null;
+	private Date receivedTimestamp;
     private String originalString;
 	private String sourceCall;
     private String destinationCall;
@@ -49,7 +51,7 @@ public class APRSPacket implements Serializable {
         this.destinationCall=destination.toUpperCase();
         if ( digipeaters == null ) {
         	Digipeater aprsIs = new Digipeater("TCPIP*");
-        	this.digipeaters = new ArrayList<Digipeater>();
+        	this.digipeaters = new ArrayList<>();
         	this.digipeaters.add(aprsIs);
         } else {
         	this.digipeaters = digipeaters;
@@ -57,54 +59,18 @@ public class APRSPacket implements Serializable {
 		this.dti = (char)body[0];
         this.aprsInformation = new InformationField(body);
     }
-    
-    
-	/** 
-	 * @param callsign
-	 * @return String
-	 */
-	public static final String getBaseCall(String callsign) {
-    	int sepIdx = callsign.indexOf('-');
-    	if ( sepIdx > -1 ) {
-    		return callsign.substring(0,sepIdx);
-    	} else {
-    		return callsign;
-    	}
-    }
-    
-    
-	/** 
-	 * @param callsign
-	 * @return String
-	 */
-	public static final String getSsid(String callsign) {
-    	int sepIdx = callsign.indexOf('-');
-    	if ( sepIdx > -1 ) {
-    		return callsign.substring(sepIdx+1);
-    	} else {
-    		return "0";
-    	}
-    }
-    
+
     public String getIgate() {
-    	for ( int i=0; i<digipeaters.size(); i++) {
+    	for ( int i = 0; i < digipeaters.size() - 1; i++) {
     		Digipeater d = digipeaters.get(i);
-    		// I'm not sure I'm treating these correctly (poor understanding of the
+    		// I'm not sure if I'm treating these correctly (poor understanding of the
     		// Q-constructs on my part).  For now, I'm saying that call sign AFTER a 
     		// q-construct is the I-gate.
-    		if ( d.getCallsign().equalsIgnoreCase("qar") && i<digipeaters.size()-1 ) {
-    			return digipeaters.get(i+1).toString();
-    		}
-    		if ( d.getCallsign().equalsIgnoreCase("qas") && i<digipeaters.size()-1 ) {
-    			return digipeaters.get(i+1).toString();
-    		}
-    		if ( d.getCallsign().equalsIgnoreCase("qac") && i<digipeaters.size()-1 ) {
-    			return digipeaters.get(i+1).toString();
-    		}
-    		if ( d.getCallsign().equalsIgnoreCase("qao") && i<digipeaters.size()-1 ) {
-    			return digipeaters.get(i+1).toString();
-    		}
+			if (d.getCallsign().matches("QA[RSCO]")) {
+				return digipeaters.get(i+1).toString();
+			}
     	}
+		//TODO should this return null or an exception?
     	return "";
     }
 
@@ -198,22 +164,15 @@ public class APRSPacket implements Serializable {
 	 * @return the hasFault
 	 */
 	public boolean hasFault() {
-		boolean fault = false;
-		for ( APRSData d : this.getAprsInformation().getAprsData().values() ) {
-			fault = fault | d.hasFault();
-		}
-		return fault;
+		return getAprsInformation().getAprsData().values().stream().anyMatch(APRSData::hasFault);
 	}
 
 	/**
 	 * @return reason the reason this packet failed to parse
 	 */
 	public final String getFaultReason() {
-		String faultReason = "";
-		for ( APRSData d : this.getAprsInformation().getAprsData().values() ) {
-			faultReason = faultReason+=d.getFaultReason();
-		}
-		return faultReason;
+		return getAprsInformation().getAprsData().values().stream()
+				.map(APRSData::getFaultReason).collect(Collectors.joining());
 	}
 
     public String getComment() {
@@ -243,7 +202,7 @@ public class APRSPacket implements Serializable {
 		// src
 		byte[] src = new Digipeater(sourceCall).toAX25();
 		// last byte of last address is |=1
-		if (digipeaters.size() == 0)
+		if (digipeaters.isEmpty())
 			src[6] |= 1;
 		baos.write(src, 0, src.length);
 		// digipeater list
@@ -264,8 +223,8 @@ public class APRSPacket implements Serializable {
 		return baos.toByteArray();
 	}
 
-	public Date getRecevedTimestamp() {
-		return this.receivedTimestamp;
+	public Date getReceivedTimestamp() {
+		return receivedTimestamp;
 	}
 }
 
