@@ -41,6 +41,7 @@ import java.util.regex.Pattern;
  */
 public class Parser {
     private static final Pattern altitudePattern = Pattern.compile(".*/A=(\\d{6}).*");
+	private static final Pattern packetFormat = Pattern.compile("(<source>[\\w-]+)>(<dest>[\\w-]+),(<path>[\\w-,*]+):(<body>.*)");
 
 	
 	/** 
@@ -76,17 +77,17 @@ public class Parser {
 	 * @throws Exception Generic "I failed"
 	 */
 	public static APRSPacket parse(final String packet) throws Exception {
-        int cs = packet.indexOf('>');
-        String source = packet.substring(0,cs).toUpperCase();
-        int ms = packet.indexOf(':');
-        String digiList = packet.substring(cs+1,ms);
-        String[] digiTemp = digiList.split(",");
-        String dest = digiTemp[0].toUpperCase();
-        ArrayList<Digipeater> digis = Digipeater.parseList(digiList, false);
-        String body = packet.substring(ms+1);
-        APRSPacket ap = parseBody(source, dest, digis, body);
-        ap.setOriginalString(packet);
-        return ap;
+		Matcher packetMatch = packetFormat.matcher(packet);
+		if(packetMatch.matches()) {
+			Callsign source = new Callsign(packetMatch.group("source"));
+			Callsign dest = new Callsign(packetMatch.group("dest"));
+			ArrayList<Digipeater> digipeaters = Digipeater.parseList(packetMatch.group("path"), true);
+			APRSPacket ap = parseBody(source.toString(), dest.toString(), digipeaters, packetMatch.group("body"));
+			ap.setOriginalString(packet);
+			return ap;
+		} else {
+			throw new IllegalArgumentException("input: "+ packet +" did not match the packet format.");
+		}
     }
 
     
