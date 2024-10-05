@@ -1,10 +1,11 @@
 package net.ab0oo.aprs.parser;
 
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
  
 
 @DisplayName("Digipeater Tests")
@@ -36,7 +37,7 @@ class DigipeaterTest {
 			@Test
 			@DisplayName("Then it should return the proper SSID")
 			void thenReturnSsid() {
-				assertEquals("15", object.getSsid());
+				assertEquals(15, object.getSsid());
 			}
 
 			@Test
@@ -88,7 +89,7 @@ class DigipeaterTest {
 			@Test
 			@DisplayName("Then it should return the proper SSID")
 			void thenReturnSsid() {
-				assertEquals("15", object.getSsid());
+				assertEquals(15, object.getSsid());
 			}
 
 			@Test
@@ -145,7 +146,7 @@ class DigipeaterTest {
 			@Test
 			@DisplayName("Then it should return the proper SSID")
 			void thenReturnSsid() {
-				assertEquals("", object.getSsid());
+				assertEquals(0, object.getSsid());
 			}
 
 			@Test
@@ -197,7 +198,7 @@ class DigipeaterTest {
 			@Test
 			@DisplayName("Then it should return the proper SSID")
 			void thenReturnSsid() {
-				assertEquals("", object.getSsid());
+				assertEquals(0, object.getSsid());
 			}
 
 			@Test
@@ -256,7 +257,7 @@ class DigipeaterTest {
 			@Test
 			@DisplayName("Then it should return the proper SSID")
 			void thenReturnNewSsid() {
-				assertEquals("1", object.getSsid());
+				assertEquals(1, object.getSsid());
 			}
 
 			@Test

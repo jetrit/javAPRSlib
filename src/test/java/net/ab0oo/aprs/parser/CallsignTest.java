@@ -1,15 +1,15 @@
 package net.ab0oo.aprs.parser;
 
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.DisplayName;
- 
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 
 @DisplayName("Callsign Tests")
 class CallsignTest {
-	/* TODO Test SSID 0 */
 	/* TODO Test serialization */
 
 	@Nested
@@ -36,7 +36,7 @@ class CallsignTest {
 			@Test
 			@DisplayName("Then it should return the proper SSID")
 			void thenReturnSsid() {
-				assertEquals("12", object.getSsid());
+				assertEquals(12, object.getSsid());
 			}
 
 			@Test
@@ -49,13 +49,13 @@ class CallsignTest {
 			@DisplayName("Then it should return correct AX25 data")
 			void thenReturnAX25() {
 				final byte[] expected = {
-					(byte)('A' << 1),
-					(byte)('B' << 1),
-					(byte)('1' << 1),
-					(byte)('C' << 1),
-					(byte)('D' << 1),
-					(byte)('E' << 1),
-					(byte)(0x60 | (12 << 1)),
+						(byte)('A' << 1),
+						(byte)('B' << 1),
+						(byte)('1' << 1),
+						(byte)('C' << 1),
+						(byte)('D' << 1),
+						(byte)('E' << 1),
+						(byte)(0x60 | (12 << 1)),
 				};
 				assertEquals(7, object.toAX25().length);
 				assertArrayEquals(expected, object.toAX25());
@@ -70,7 +70,7 @@ class CallsignTest {
 			@BeforeEach
 			void setUp() {
 				object = new Callsign(
-					new Callsign(callsign).toAX25(), 0);
+						new Callsign(callsign).toAX25(), 0);
 			}
 
 			@Test
@@ -82,7 +82,7 @@ class CallsignTest {
 			@Test
 			@DisplayName("Then it should return the proper SSID")
 			void thenReturnSsid() {
-				assertEquals("12", object.getSsid());
+				assertEquals(12, object.getSsid());
 			}
 
 			@Test
@@ -95,13 +95,13 @@ class CallsignTest {
 			@DisplayName("Then it should return correct AX25 data")
 			void thenReturnAX25() {
 				final byte[] expected = {
-					(byte)('A' << 1),
-					(byte)('B' << 1),
-					(byte)('1' << 1),
-					(byte)('C' << 1),
-					(byte)('D' << 1),
-					(byte)('E' << 1),
-					(byte)(0x60 | (12 << 1)),
+						(byte)('A' << 1),
+						(byte)('B' << 1),
+						(byte)('1' << 1),
+						(byte)('C' << 1),
+						(byte)('D' << 1),
+						(byte)('E' << 1),
+						(byte)(0x60 | (12 << 1)),
 				};
 				assertEquals(7, object.toAX25().length);
 				assertArrayEquals(expected, object.toAX25());
@@ -133,7 +133,7 @@ class CallsignTest {
 			@Test
 			@DisplayName("Then it should return the proper SSID")
 			void thenReturnSsid() {
-				assertEquals("", object.getSsid());
+				assertEquals(0, object.getSsid());
 			}
 
 			@Test
@@ -146,13 +146,13 @@ class CallsignTest {
 			@DisplayName("Then it should return correct AX25 data")
 			void thenReturnAX25() {
 				final byte[] expected = {
-					(byte)('A' << 1),
-					(byte)('B' << 1),
-					(byte)('1' << 1),
-					(byte)('C' << 1),
-					(byte)('D' << 1),
-					(byte)('E' << 1),
-					(byte)(0x60 | (0 << 1)),
+						(byte)('A' << 1),
+						(byte)('B' << 1),
+						(byte)('1' << 1),
+						(byte)('C' << 1),
+						(byte)('D' << 1),
+						(byte)('E' << 1),
+						(byte)(0x60 | (0 << 1)),
 				};
 				assertEquals(7, object.toAX25().length);
 				assertArrayEquals(expected, object.toAX25());
@@ -167,7 +167,7 @@ class CallsignTest {
 			@BeforeEach
 			void setUp() {
 				object = new Callsign(
-					new Callsign(callsign).toAX25(), 0);
+						new Callsign(callsign).toAX25(), 0);
 			}
 
 			@Test
@@ -179,7 +179,7 @@ class CallsignTest {
 			@Test
 			@DisplayName("Then it should return the proper SSID")
 			void thenReturnSsid() {
-				assertEquals("", object.getSsid());
+				assertEquals(0, object.getSsid());
 			}
 
 			@Test
@@ -192,13 +192,13 @@ class CallsignTest {
 			@DisplayName("Then it should return correct AX25 data")
 			void thenReturnAX25() {
 				final byte[] expected = {
-					(byte)('A' << 1),
-					(byte)('B' << 1),
-					(byte)('1' << 1),
-					(byte)('C' << 1),
-					(byte)('D' << 1),
-					(byte)('E' << 1),
-					(byte)(0x60 | (0 << 1)),
+						(byte)('A' << 1),
+						(byte)('B' << 1),
+						(byte)('1' << 1),
+						(byte)('C' << 1),
+						(byte)('D' << 1),
+						(byte)('E' << 1),
+						(byte)(0x60 | (0 << 1)),
 				};
 				assertEquals(7, object.toAX25().length);
 				assertArrayEquals(expected, object.toAX25());
@@ -233,7 +233,7 @@ class CallsignTest {
 			@Test
 			@DisplayName("Then it should return the original SSID")
 			void thenReturnOriginalSsid() {
-				assertEquals("5", object.getSsid());
+				assertEquals(5, object.getSsid());
 			}
 
 			@Test
@@ -246,13 +246,13 @@ class CallsignTest {
 			@DisplayName("Then it should return correct AX25 data")
 			void thenReturnAX25() {
 				final byte[] expected = {
-					(byte)('N' << 1),
-					(byte)('J' << 1),
-					(byte)('7' << 1),
-					(byte)('P' << 1),
-					(byte)(' ' << 1),
-					(byte)(' ' << 1),
-					(byte)(0x60 | (5 << 1)),
+						(byte)('N' << 1),
+						(byte)('J' << 1),
+						(byte)('7' << 1),
+						(byte)('P' << 1),
+						(byte)(' ' << 1),
+						(byte)(' ' << 1),
+						(byte)(0x60 | (5 << 1)),
 				};
 				assertEquals(7, object.toAX25().length);
 				assertArrayEquals(expected, object.toAX25());
@@ -264,7 +264,7 @@ class CallsignTest {
 		class WhenSsidChanged {
 			@BeforeEach
 			void setUp() {
-				object.setSsid("9");
+				object.setSsid(9);
 			}
 
 			@Test
@@ -276,7 +276,7 @@ class CallsignTest {
 			@Test
 			@DisplayName("Then it should return the new SSID")
 			void thenReturnNewSsid() {
-				assertEquals("9", object.getSsid());
+				assertEquals(9, object.getSsid());
 			}
 
 			@Test
@@ -289,13 +289,13 @@ class CallsignTest {
 			@DisplayName("Then it should return correct AX25 data")
 			void thenReturnAX25() {
 				final byte[] expected = {
-					(byte)('W' << 1),
-					(byte)('1' << 1),
-					(byte)('A' << 1),
-					(byte)('W' << 1),
-					(byte)(' ' << 1),
-					(byte)(' ' << 1),
-					(byte)(0x60 | (9 << 1)),
+						(byte)('W' << 1),
+						(byte)('1' << 1),
+						(byte)('A' << 1),
+						(byte)('W' << 1),
+						(byte)(' ' << 1),
+						(byte)(' ' << 1),
+						(byte)(0x60 | (9 << 1)),
 				};
 				assertEquals(7, object.toAX25().length);
 				assertArrayEquals(expected, object.toAX25());
@@ -319,7 +319,7 @@ class CallsignTest {
 			@Test
 			@DisplayName("Then it should return the original SSID")
 			void thenReturnOriginalSsid() {
-				assertEquals("5", object.getSsid());
+				assertEquals(5, object.getSsid());
 			}
 
 			@Test
@@ -332,17 +332,53 @@ class CallsignTest {
 			@DisplayName("Then it should return correct AX25 data")
 			void thenReturnAX25() {
 				final byte[] expected = {
-					(byte)('N' << 1),
-					(byte)('7' << 1),
-					(byte)('L' << 1),
-					(byte)('E' << 1),
-					(byte)('M' << 1),
-					(byte)(' ' << 1),
-					(byte)(0x60 | (5 << 1)),
+						(byte)('N' << 1),
+						(byte)('7' << 1),
+						(byte)('L' << 1),
+						(byte)('E' << 1),
+						(byte)('M' << 1),
+						(byte)(' ' << 1),
+						(byte)(0x60 | (5 << 1)),
 				};
 				assertEquals(7, object.toAX25().length);
 				assertArrayEquals(expected, object.toAX25());
 			}
+		}
+		@Test
+		void validationTest() {
+			try {
+				new Callsign("call-sign");
+				fail("exception should have been thrown as 'sign' is not a valid integer");
+			} catch (IllegalArgumentException e){
+				assertInstanceOf(IllegalArgumentException.class, e,"correct error returned");
+			}
+			Callsign callsign = new Callsign("call");
+			assertEquals(0, callsign.getSsid());
+			callsign.setSsid(1);
+			assertEquals(1, callsign.getSsid());
+			try {
+				callsign.setSsid(-1);
+				fail("exception should have been thrown as 'sign' is not a valid integer");
+			} catch (IllegalArgumentException e){
+				assertInstanceOf(IllegalArgumentException.class, e,"correct error returned");
+			}
+			try {
+				callsign.setCallsign("call-1");
+			} catch (IllegalArgumentException e){
+				assertInstanceOf(IllegalArgumentException.class, e,"correct error returned");
+			}
+		}
+
+		@Test
+		void toStringTest(){
+			Callsign callsign = new Callsign("call");
+			assertEquals("CALL", callsign.toString());
+			callsign = new Callsign("call-0");
+			assertEquals("CALL", callsign.toString());
+			callsign.setSsid(1);
+			assertEquals("CALL-1", callsign.toString());
+			callsign.setSsid(0);
+			assertEquals("CALL", callsign.toString());
 		}
 	}
 }
